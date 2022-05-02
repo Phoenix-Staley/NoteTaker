@@ -22,4 +22,27 @@ app.get("/api/notes", (req, res) => {
     res.send(data);
 });
 
+app.post("/api/notes", (req, res) => {
+    console.info("POST request received to save a note");
+
+    let response;
+
+    if (req.body && req.body.title && req.body.text) {
+        const input = {
+            title: req.body.title,
+            text: req.body.text,
+            id: uuid.v4()
+        };
+        response = {
+            status: "success",
+            data: req.body
+        };
+        
+        data.push(input);
+        fs.writeFileSync("./db/db.json", JSON.stringify(data));
+        res.status(201).json(response);
+    } else {
+        res.status(400).json("Request body must contain a title and a text property");
+    }
+});
 app.listen(PORT);
