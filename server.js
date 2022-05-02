@@ -19,7 +19,7 @@ app.get("/notes", (req, res) => {
 });
 
 app.get("/api/notes", (req, res) => {
-    
+    res.send(data);
 });
 
 app.listen(PORT);
