@@ -45,4 +45,19 @@ app.post("/api/notes", (req, res) => {
         res.status(400).json("Request body must contain a title and a text property");
     }
 });
+
+app.delete("/api/notes/:id", (req, res) => {
+    console.info("DELETE request received to delete a note");
+
+    const reqId = req.params.id;
+
+    for (let i=0; i < data.length; i++) {
+        if (data[i].id === reqId) {
+            data.splice(i, 1);
+        }
+    }
+
+    fs.writeFileSync("./db/db.json", JSON.stringify(data));
+});
+
 app.listen(PORT);
